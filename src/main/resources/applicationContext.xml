@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf-8" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+
+    </bean>
+
+    <!--
+		定义一个JdbcTemplate
+		Bean,若想引用以定义的数据源，其中name属性必须为dataSource,ref为指定的已定义的数据源, 可以尝试三种数据源
+	-->
+    <bean id="jdbcTemplate1" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <bean id="dao" class="com.weikun.dao.UserDAOImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate1"></property>
+    </bean>
+
+</beans>
